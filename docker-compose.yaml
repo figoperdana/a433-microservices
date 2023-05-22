@@ -7,6 +7,7 @@ services:
       - app-db:/data/db
     ports:
       - 27017:27017
+    restart: always
   item-app:
     image: figoperdana/item-app:v1
     command: sh -c "npm install --production --unsafe-perm && npm run build && npm run start"
@@ -19,6 +20,7 @@ services:
     environment:
       NODE_ENV: production
       DB_HOST: item-db
+    restart: always
 volumes:
   app-db:
   
