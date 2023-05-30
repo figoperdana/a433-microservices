@@ -1,3 +1,5 @@
 Link Docker Hub : https://hub.docker.com/r/dafit17docker/item-app
 Link Github Packages : https://github.com/figoperdana/a433-microservices/pkgs/container/a433-microservices
 Link Github : https://github.com/figoperdana/a433-microservices/tree/proyek-pertama
+
+Akun Docker saya dari awal buat memang sudah dafit17docker, bukan figoperdana, kebetulan kesalahan penamaan untuk pull image pada dockercompose, bukan berarti akun saya memang bernama figoperdana, saya tidak punya akun docker figoperdana
