@@ -7,7 +7,7 @@ on:
 env:
   REGISTRY: docker.io
   DOCKER_USERNAME: dafit17docker 
-  IMAGE_NAME: figoperdana-a433-microservices
+  IMAGE_NAME: dafit17docker-a433-microservices
 
 jobs:
   build-and-push-image:
