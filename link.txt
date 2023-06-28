@@ -1,0 +1,5 @@
+Link Docker Hub : https://hub.docker.com/repository/docker/dafit17docker/item-app/general
+Link Github Packages : https://github.com/figoperdana/a433-microservices/pkgs/container/a433-microservices
+
+kubectl --namespace monitoring port-forward $POD_NAME 9090  
+$ kubectl --namespace monitoring port-forward $POD_NAME 3000
