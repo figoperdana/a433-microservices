@@ -5,8 +5,8 @@ on:
     branches: ["proyek-pertama"]
 
 env:
-  DOCKER_USERNAME: dafit17docker   # Your Docker Hub username
-  IMAGE_NAME: item-app # Your existing Docker image name
+  DOCKER_USERNAME: dafit17docker   
+  IMAGE_NAME: item-app 
 
 jobs:
   push-to-docker-hub:
