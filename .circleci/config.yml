@@ -19,7 +19,7 @@ jobs:
           name: Build and push image
           command: |
             docker build -t ghcr.io/figoperdana/karsajobs-ui:latest .
-            echo "$GHCR_TOKEN" | docker login ghcr.io -u "$ghcr_user" --password-stdin
+            echo "$GHCR_TOKEN" | docker login ghcr.io -u figoperdana --password-stdin
             docker push ghcr.io/figoperdana/karsajobs-ui:latest
 
 workflows:
