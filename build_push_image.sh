@@ -1,13 +1,18 @@
 #!/bin/bash
 
+
+# Membuat image Docker dengan nama "karsajobs-ui" dan tag "latest" dari Dockerfile di direktori saat ini
 docker build -t karsajobs:latest .
+
+# Menampilkan daftar image Docker yang ada di komputer lokal Anda
 docker image ls
+
+# Jadi dalam hal ini, kita membuat tag dengan hostname "ghcr.io", user "figoperdana", dan repository "karsajobs-ui"
 docker tag karsajobs:latest ghcr.io/figoperdana/karsajobs:latest
 
-# need variable CR_PAT, it can be get from github personal access token
-# echo $secrets.GHCR_TOKEN | docker login ghcr.io -u figoperdana --password-stdin
-# echo "$GHCR_TOKEN" | docker login ghcr.io -u "figoperdana" --password-stdin
-# docker login ghcr.io -u figoperdana -p $secrets.GHCR_TOKEN
+
+# Melakukan login ke GitHub Container Registry (ghcr.io) menggunakan username "figoperdana" dan token autentikasi dari env $GHCR_TOKEN
 docker login ghcr.io -u figoperdana -p $GHCR_TOKEN
 
+# Melakukan push image Docker dengan tag "ghcr.io/figoperdana/karsajobs-ui:latest" ke GitHub Container Registry (ghcr.io)
 docker push ghcr.io/figoperdana/karsajobs:latest
