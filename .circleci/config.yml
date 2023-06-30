@@ -2,23 +2,18 @@ version: 2.1
 jobs:
   lint-dockerfile:
     docker:
-      - image: hadolint/hadolint:latest
-
+      - image: hadolint/hadolint:latest-debian
     steps:
       - checkout
-
       - run:
           name: Lint Dockerfile
-          command: |
-            hadolint Dockerfile
+          command: hadolint Dockerfile
 
   test-app:
     docker:
       - image: golang:1.16
-
     steps:
       - checkout
-
       - run:
           name: Run unit tests
           command: go test -v -short --count=1 $(go list ./...)
@@ -26,14 +21,13 @@ jobs:
   build-app-karsajobs:
     docker:
       - image: cimg/go:1.16
-
     steps:
       - checkout
       - setup_remote_docker
       - run:
           name: Build and push image
           command: |
-            docker build -t karsajobs:latest .
+            docker build -t ghcr.io/figoperdana/karsajobs:latest .
             docker login ghcr.io -u figoperdana -p $GHCR_TOKEN
             docker push ghcr.io/figoperdana/karsajobs:latest
 
