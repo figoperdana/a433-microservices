@@ -11,7 +11,7 @@ jobs:
 
   build-app-karsajobs-ui:
     docker:
-      - image: cimg/go:1.16
+      - image: cimg/base:stable
     steps:
       - checkout
       - setup_remote_docker
