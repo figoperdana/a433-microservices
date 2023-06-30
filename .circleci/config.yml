@@ -25,11 +25,11 @@ jobs:
 
   build-app-karsajobs:
     docker:
-      - image: golang:1.16
+      - image: cimg/go:1.16
 
     steps:
       - checkout
-
+      - setup_remote_docker
       - run:
           name: Build and push image
           command: |
