@@ -1,26 +1,40 @@
+# Versi API yang digunakan. Pada kasus ini, digunakan "apps/v1" yang merupakan API stabil untuk membuat Deployment
 apiVersion: apps/v1
+
+# Jenis objek yang dibuat. Pada kasus ini, membuat Deployment
 kind: Deployment
+
+# Metadata untuk Deployment, seperti nama dan label
 metadata:
   name: karsajobs-ui
   labels:
     tier: frontend
+
+# Spesifikasi Deployment
 spec:
+  # Jumlah replica/pods yang diharapkan untuk aplikasi
   replicas: 1
+
+  # Selector digunakan untuk menentukan pod mana yang dikelola oleh Deployment ini
   selector:
     matchLabels:
       app: karsajobs-ui
       tier: frontend
+
+  # Template digunakan untuk membuat pod baru jika diperlukan
   template:
     metadata:
       labels:
         app: karsajobs-ui
         tier: frontend
     spec:
+      # Kontainer yang akan berjalan di dalam pod
       containers:
         - name: karsajobs-ui
           image: dafit17docker/karsajobs-ui:latest
           ports:
-            - containerPort: 8000
+            - containerPort: 8000 # Port yang digunakan aplikasi dalam kontainer
+          # Variabel lingkungan yang dibutuhkan aplikasi
           env:
             - name: VUE_APP_BACKEND
-              value: "http://127.0.0.1:30286"
+              value: "http://127.0.0.1:30286" # Backend URL untuk aplikasi

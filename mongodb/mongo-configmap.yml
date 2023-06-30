@@ -1,8 +1,15 @@
+# Versi API yang digunakan. Pada kasus ini, digunakan "v1" yang merupakan API stabil untuk membuat ConfigMap
 apiVersion: v1
+
+# Jenis objek yang dibuat. Pada kasus ini, membuat ConfigMap
 kind: ConfigMap
+
+# Metadata untuk ConfigMap, seperti nama
 metadata:
   name: mongo-configmap
+
+# Data ConfigMap. Pada kasus ini, berisi konfigurasi untuk MongoDB
 data:
   mongo.conf: |
     storage:
-      dbPath: /data/db
+      dbPath: /data/db # Lokasi penyimpanan data MongoDB di dalam kontainer

@@ -1,5 +1,6 @@
-Link Docker Hub : https://hub.docker.com/repository/docker/dafit17docker/item-app/general
-Link Github Packages : https://github.com/figoperdana/a433-microservices/pkgs/container/a433-microservices
+Link Docker Hub Karsajobs : https://hub.docker.com/repository/docker/dafit17docker/karsajobs
+Link Docker Hub Karsajobs UI : https://hub.docker.com/repository/docker/dafit17docker/karsajobs-ui
+Link Github Packages Karsajobs : https://github.com/figoperdana/a433-microservices/pkgs/container/karsajobs
+Link Github Packages Karsajobs UI : https://github.com/figoperdana/a433-microservices/pkgs/container/karsajobs-ui
 
-kubectl --namespace monitoring port-forward $POD_NAME 9090  
-$ kubectl --namespace monitoring port-forward $POD_NAME 3000
+

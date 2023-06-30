@@ -1,12 +1,24 @@
+# Versi API yang digunakan. Pada kasus ini, digunakan "v1" yang merupakan API stabil untuk membuat Service
 apiVersion: v1
+
+# Jenis objek yang dibuat. Pada kasus ini, membuat Service
 kind: Service
+
+# Metadata untuk Service, seperti nama
 metadata:
   name: mongodb
+
+# Spesifikasi Service
 spec:
+  # Selector digunakan untuk menentukan pod mana yang akan melayani traffic untuk Service ini
   selector:
     app: mongodb
+
+  # Port yang digunakan oleh Service
   ports:
-    - protocol: TCP
+    - protocol: TCP # Protokol yang digunakan. Pada kasus ini, digunakan TCP
       port: 27017
       targetPort: 27017
+
+  # ClusterIP digunakan untuk menentukan bagaimana Service dapat diakses dalam kluster. Pada kasus ini, dengan None, Service hanya dapat diakses di dalam kluster dan tidak akan memiliki IP kluster
   clusterIP: None

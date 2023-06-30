@@ -1,50 +1,71 @@
+# Versi API yang digunakan. Pada kasus ini, digunakan "apps/v1" yang merupakan API stabil untuk membuat StatefulSet
 apiVersion: apps/v1
+
+# Jenis objek yang dibuat. Pada kasus ini, membuat StatefulSet
 kind: StatefulSet
+
+# Metadata untuk StatefulSet, seperti nama
 metadata:
   name: mongodb
+
+# Spesifikasi StatefulSet
 spec:
+  # Selector digunakan untuk menentukan pod mana yang dikelola oleh StatefulSet ini
   selector:
     matchLabels:
       app: mongodb
+
+  # serviceName mengarah ke Service yang akan mengatur traffic ke pod dalam StatefulSet
   serviceName: mongodb
+
+  # Jumlah replica/pods yang diharapkan untuk aplikasi
   replicas: 1
+
+  # Template digunakan untuk membuat pod baru jika diperlukan
   template:
     metadata:
       labels:
         app: mongodb
     spec:
+      # Kontainer yang akan berjalan di dalam pod
       containers:
         - name: mongodb
-          image: mongo:4.2.24-bionic
+          image: mongo:4.2.24-bionic # Versi dan basis image MongoDB
           ports:
-            - containerPort: 27017
+            - containerPort: 27017 # Port yang digunakan aplikasi dalam kontainer
+          # volumeMounts digunakan untuk menentukan volume mana yang akan dipasang di dalam kontainer dan di mana
           volumeMounts:
             - name: mongodb-pvc
-              mountPath: /data/db
+              mountPath: /data/db # Lokasi penyimpanan data MongoDB
             - name: mongo-configmap
-              mountPath: /config
+              mountPath: /config # Lokasi konfigurasi MongoDB
             - name: mongo-secret
-              mountPath: /etc/mongo-secret
+              mountPath: /etc/mongo-secret # Lokasi Secret
+          # Variabel lingkungan yang dibutuhkan aplikasi
           env:
             - name: MONGO_INITDB_ROOT_USERNAME_FILE
-              value: /etc/mongo-secret/MONGO_ROOT_USERNAME
+              value: /etc/mongo-secret/MONGO_ROOT_USERNAME # Lokasi file username MongoDB
             - name: MONGO_INITDB_ROOT_PASSWORD_FILE
-              value: /etc/mongo-secret/MONGO_ROOT_PASSWORD
-      volumes:
-        - name: mongodb-pvc
-          persistentVolumeClaim:
-            claimName: mongodb-pvc
-        - name: mongo-configmap
-          configMap:
-            name: mongo-configmap
-        - name: mongo-secret
-          secret:
-            secretName: mongo-secret
+              value: /etc/mongo-secret/MONGO_ROOT_PASSWORD # Lokasi file password MongoDB
+
+  # volumes digunakan untuk menentukan volume yang akan digunakan oleh semua pod dalam StatefulSet
+  volumes:
+    - name: mongodb-pvc
+      persistentVolumeClaim:
+        claimName: mongodb-pvc
+    - name: mongo-configmap
+      configMap:
+        name: mongo-configmap
+    - name: mongo-secret
+      secret:
+        secretName: mongo-secret
+
+  # volumeClaimTemplates digunakan untuk membuat PersistentVolumeClaim secara otomatis untuk setiap pod dalam StatefulSet
   volumeClaimTemplates:
     - metadata:
         name: mongodb-pvc
       spec:
-        accessModes: ["ReadWriteOnce"]
+        accessModes: ["ReadWriteOnce"] # Mode akses untuk PersistentVolume
         resources:
           requests:
-            storage: 1Gi
+            storage: 1Gi # Permintaan sumber daya penyimpanan

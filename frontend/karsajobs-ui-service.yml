@@ -1,17 +1,27 @@
+# Versi API yang digunakan. Pada kasus ini, digunakan "v1" yang merupakan API stabil untuk membuat Service
 apiVersion: v1
+
+# Jenis objek yang dibuat. Pada kasus ini, membuat Service
 kind: Service
+
+# Metadata untuk Service, seperti nama dan label
 metadata:
   name: karsajobs-ui
   labels:
     app: karsajobs-ui
     tier: frontend
+
+# Spesifikasi Service
 spec:
+  # Tipe Service. NodePort membuat Service dapat diakses dari setiap node di kluster
   type: NodePort
+
+  # Selector digunakan untuk menentukan pod mana yang akan melayani traffic untuk Service ini
   selector:
     app: karsajobs-ui
     tier: frontend
+
+  # Port yang digunakan oleh Service
   ports:
     - port: 8000
       targetPort: 8000
-
-    

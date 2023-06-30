@@ -1,13 +1,25 @@
+# Versi API yang digunakan. Pada kasus ini, digunakan "v1" yang merupakan API stabil untuk membuat Service
 apiVersion: v1
+
+# Jenis objek yang dibuat. Pada kasus ini, membuat Service
 kind: Service
+
+# Metadata untuk Service, seperti nama dan label
 metadata:
   name: karsajobs
   labels:
     tier: backend
+
+# Spesifikasi Service
 spec:
+  # Port yang digunakan oleh Service
   ports:
     - port: 8080
       targetPort: 8080
+
+  # Selector digunakan untuk menentukan pod mana yang akan melayani traffic untuk Service ini
   selector:
     tier: backend
+
+  # Tipe Service. NodePort membuat Service dapat diakses dari setiap node di kluster
   type: NodePort

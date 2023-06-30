@@ -1,10 +1,20 @@
+# Versi API yang digunakan. Pada kasus ini, digunakan "v1" yang merupakan API stabil untuk membuat PersistentVolumeClaim
 apiVersion: v1
+
+# Jenis objek yang dibuat. Pada kasus ini, membuat PersistentVolumeClaim
 kind: PersistentVolumeClaim
+
+# Metadata untuk PersistentVolumeClaim, seperti nama
 metadata:
   name: mongodb-pvc
+
+# Spesifikasi PersistentVolumeClaim
 spec:
+  # Mode akses untuk PersistentVolume. Pada kasus ini, digunakan ReadWriteOnce yang berarti volume dapat ditulis dan dibaca oleh satu Node
   accessModes:
     - ReadWriteOnce
+
+  # Permintaan sumber daya untuk PersistentVolumeClaim. Pada kasus ini, permintaan penyimpanan 1Gi
   resources:
     requests:
       storage: 1Gi

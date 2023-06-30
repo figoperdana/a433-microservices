@@ -1,25 +1,39 @@
+# Versi API yang digunakan. Pada kasus ini, digunakan "apps/v1" yang merupakan API stabil untuk membuat Deployment
 apiVersion: apps/v1
+
+# Jenis objek yang dibuat. Pada kasus ini, membuat Deployment
 kind: Deployment
+
+# Metadata untuk Deployment, seperti nama dan label
 metadata:
   name: karsajobs
   labels:
     tier: backend
+
+# Spesifikasi Deployment
 spec:
+  # Jumlah replica/pods yang diharapkan untuk aplikasi
   replicas: 3
+
+  # Selector digunakan untuk menentukan pod mana yang dikelola oleh Deployment ini
   selector:
     matchLabels:
       tier: backend
+
+  # Template digunakan untuk membuat pod baru jika diperlukan
   template:
     metadata:
       labels:
         app: karsajobs
         tier: backend
     spec:
+      # Kontainer yang akan berjalan di dalam pod
       containers:
       - name: karsajobs
         image: dafit17docker/karsajobs:latest
         ports:
-        - containerPort: 8080 # Change to your application's port
+        - containerPort: 8080 # Port yang digunakan aplikasi dalam kontainer
+        # Variabel lingkungan yang dibutuhkan aplikasi
         env:
         - name: APP_PORT
           value: "8080"
@@ -28,11 +42,13 @@ spec:
         - name: MONGO_PORT
           value: "27017"
         - name: MONGO_USER
+          # Nilai variabel lingkungan diambil dari Secret di Kubernetes
           valueFrom:
             secretKeyRef:
               name: mongo-secret
               key: MONGO_ROOT_USERNAME
         - name: MONGO_PASS
+          # Nilai variabel lingkungan diambil dari Secret di Kubernetes
           valueFrom:
             secretKeyRef:
               name: mongo-secret
