@@ -1,46 +1,46 @@
 version: 2.1
-orbs:
-  docker: circleci/docker@1.7.0
-  golang: circleci/golang@1.3.0
 jobs:
   lint-dockerfile:
     docker:
-      - image: hadolint/hadolint:latest-debian
+      - image: hadolint/hadolint:latest
+
     steps:
       - checkout
+
       - run:
           name: Lint Dockerfile
-          command: hadolint Dockerfile
+          command: |
+            hadolint Dockerfile
+
   test-app:
     docker:
-      - image: circleci/golang:1.15
+      - image: golang:1.16
+
     steps:
       - checkout
-      - golang/test:
-          packages: "./..."
-  build-and-push:
-    docker:
-      - image: circleci/python:3.7
-    environment:
-      IMAGE_NAME: "karsajobs"
-    steps:
-      - checkout
-      - setup_remote_docker
+
       - run:
-          name: Log in to GHCR
-          command: echo "$GHCR_TOKEN" | docker login ghcr.io -u $GHCR_USERNAME --password-stdin
-      - docker/build:
-          image: ghcr.io/${GHCR_USERNAME}/${IMAGE_NAME}
-          tag: 'latest'
-          dockerfile: 'Dockerfile'
-          deploy: true
+          name: Run unit tests
+          command: go test -v -short --count=1 $(go list ./...)
+
+  build-app-karsajobs:
+    docker:
+      - image: golang:1.16
+
+    steps:
+      - checkout
+
+      - run:
+          name: Build and push image
+          command: |
+            docker build -t karsajobs:latest .
+            docker login ghcr.io -u figoperdana -p $GHCR_TOKEN
+            docker push ghcr.io/figoperdana/karsajobs:latest
+
 workflows:
   version: 2
-  build-test-and-deploy:
+  build:
     jobs:
       - lint-dockerfile
       - test-app
-      - build-and-push:
-          requires:
-            - lint-dockerfile
-            - test-app
+      - build-app-karsajobs
