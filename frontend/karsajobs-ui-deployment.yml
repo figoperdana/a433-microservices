@@ -31,7 +31,7 @@ spec:
       # Kontainer yang akan berjalan di dalam pod
       containers:
         - name: karsajobs-ui
-          image: dafit17docker/karsajobs-ui:latest
+          image: ghcr.io/figoperdana/karsajobs-ui:latest
           ports:
             - containerPort: 8000 # Port yang digunakan aplikasi dalam kontainer
           # Variabel lingkungan yang dibutuhkan aplikasi
