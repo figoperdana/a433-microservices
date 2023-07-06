@@ -11,7 +11,7 @@ docker image ls
 docker tag shipping-service:latest ghcr.io/figoperdana/shipping-service:latest
 
 # Melakukan login ke GitHub Container Registry (ghcr.io) menggunakan username "figoperdana" dan token autentikasi dari env $GHCR_TOKEN
-docker login ghcr.io -u figoperdana -p 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
+docker login ghcr.io -u figoperdana -p $GHCR_TOKEN
 
 # Melakukan push image Docker dengan tag "ghcr.io/figoperdana/shipping-service:latest" ke GitHub Container Registry (ghcr.io)
 docker push ghcr.io/figoperdana/shipping-service:latest
