@@ -1,33 +1,49 @@
+# Menggunakan API versi "networking.istio.io/v1beta1" yang digunakan untuk Gateway Istio.
 apiVersion: networking.istio.io/v1beta1
+# Membuat objek Gateway.
 kind: Gateway
 metadata:
+  # Nama dari Gateway.
   name: ecommerce-gateway
 spec:
   selector:
+    # Selector yang digunakan oleh Gateway untuk menentukan workload mana yang akan diterapkan konfigurasi Gateway ini.
     istio: ingressgateway
   servers:
   - port:
+      # Port yang akan didengarkan oleh Gateway
       number: 80
+      # Nama port ini, harus sesuai dengan protokol yang digunakan.
       name: http
+      # Protokol yang digunakan oleh port ini.
       protocol: HTTP
     hosts:
+    # Gateway ini akan digunakan untuk semua host.
     - "*"
 ---
+# Menggunakan API versi "networking.istio.io/v1beta1" yang digunakan untuk VirtualService Istio.
 apiVersion: networking.istio.io/v1beta1
+ # Membuat objek VirtualService.
 kind: VirtualService
 metadata:
+  # Nama dari VirtualService.
   name: order-service
 spec:
   hosts:
+  # VirtualService ini akan digunakan untuk semua host.
   - "*"
   gateways:
+# Gateway yang akan digunakan oleh VirtualService ini.
   - ecommerce-gateway
   http:
   - match:
     - uri:
+        # URI yang harus sesuai agar dapat di-route ke destinasi yang ditentukan.
         exact: /order
     route:
     - destination:
+        # Host tujuan dari rute ini.
         host: order-service
         port:
+          # Port tujuan dari rute ini.
           number: 3000

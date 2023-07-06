@@ -1,12 +1,19 @@
+# Menggunakan API versi "v1" yang digunakan untuk Service.
 apiVersion: v1
+# Membuat objek Service.  
 kind: Service
 metadata:
   labels:
+    # Label yang digunakan untuk mengidentifikasi Service.
     app: order-service
+  # Nama dari Service.
   name: order-service
 spec:
   ports:
+    # Protokol yang digunakan oleh Service.
     - protocol: TCP
+      # Port yang digunakan oleh Service.  
       port: 3000
   selector:
+    # Label yang harus dimiliki oleh Pod agar dianggap sebagai bagian dari Service ini.
     app: order-service

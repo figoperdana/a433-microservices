@@ -1,31 +1,43 @@
+# Menggunakan API versi "apps/v1" yang digunakan untuk Deployment.
 apiVersion: apps/v1
+# Membuat objek Deployment.  
 kind: Deployment
 metadata:
   name: shipping-service
   labels:
     app: shipping-service
 spec:
+  # Jumlah pod yang diharapkan selalu berjalan.
   replicas: 1
   selector:
     matchLabels:
+      # Label yang harus dimiliki oleh Pod agar dianggap sebagai bagian dari Deployment ini.
       app: shipping-service
   template:
     metadata:
       labels:
+       # Label yang akan diberikan ke setiap Pod yang dibuat oleh Deployment ini.
         app: shipping-service
     spec:
       containers:
+        # Image yang digunakan oleh container.
         - image: ghcr.io/figoperdana/shipping-service:latest
+          # Nama container.
           name: shipping-service
+          # Port yang digunakan oleh aplikasi dalam container.
           ports:
             - containerPort: 3001
           env:
             - name: PORT
+              # Variabel environment yang akan diberikan ke aplikasi dalam container.
               value: "3001"
             - name: RABBITMQ_PASSWORD
               valueFrom:
                 secretKeyRef:
+                  # Nama Secret yang berisi password RabbitMQ.
                   name: my-release-rabbitmq
+                  # Kunci dari Secret yang berisi password RabbitMQ.
                   key: rabbitmq-password
             - name: AMQP_URL
+              # URL RabbitMQ.
               value: amqp://user:$(RABBITMQ_PASSWORD)@$(MY_RELEASE_RABBITMQ_SERVICE_HOST):5672
