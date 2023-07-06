@@ -1,0 +1,30 @@
+version: 2.1
+jobs:
+  lint-dockerfile:
+    docker:
+      - image: hadolint/hadolint:latest-debian
+    steps:
+      - checkout
+      - run:
+          name: Lint Dockerfile
+          command: hadolint Dockerfile
+
+  build-app-order-service:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build and push image
+          command: |
+            docker build -t ghcr.io/figoperdana/order-service:latest .
+            echo "$GHCR_TOKEN" | docker login ghcr.io -u figoperdana --password-stdin
+            docker push ghcr.io/figoperdana/order-service:latest
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - lint-dockerfile
+      - build-app-order-service
